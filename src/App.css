@@ -9,7 +9,7 @@ body {
 input[type="submit"] {
   margin: auto;
   display: inline-block;
-  background: #5d5c19;
+  background: #195d19;
 	color: inherit;
   border: none;
   border-radius: 8px;
@@ -25,7 +25,7 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background: #706f1b;
+  background: #257525;
 }
 
 .dashboard-formula {

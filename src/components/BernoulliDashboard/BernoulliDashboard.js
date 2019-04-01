@@ -58,10 +58,6 @@ class BernoulliDashboard extends Component{
     this.setState({m2: m2.toString()}); 
   }
 
-  handleBetweenCheck = (e) => { 
-    this.setState({between: e.target.checked, m: null}); 
-  }
-
   handleEventsOptionChange = (option) => {
     this.setState({numberOfEventsOption: option});
   }
@@ -73,7 +69,6 @@ class BernoulliDashboard extends Component{
       m: '',
       m1: '',
       m2: '',
-      between: false,
       numberOfEventsOption: 'single',
       calculationResult: '',
       error: true,
@@ -93,9 +88,12 @@ class BernoulliDashboard extends Component{
       pIsWrong = true;
    
     let mList = [], mIntList = [];
-    mList.push(this.state.m);
-    if(this.state.between)
+
+    if(this.state.numberOfEventsOption === 'between')
       mList.push(this.state.m1, this.state.m1);
+    else
+      mList.push(this.state.m);
+
     mList.forEach(el => {
       let num = Number.parseInt(el);
       mIntList.push(num);
@@ -117,8 +115,8 @@ class BernoulliDashboard extends Component{
       
     if(!error)
       calculationResult = 
-      !this.state.between ? Bernoulli(this.state.numberOfEventsOption, p, n, mIntList[0])
-      : BernoulliBetween(p, n, mIntList[1], mIntList[2]);
+      !this.state.numberOfEventsOption === 'between' ? Bernoulli(this.state.numberOfEventsOption, p, n, Number.parseInt(this.state.m))
+      : BernoulliBetween(p, n, Number.parseInt(this.state.m1), Number.parseInt(this.state.m2));
 
     this.setState({calculationResult: calculationResult, error: error, errorMessage: errorMessage});
   }
@@ -138,7 +136,11 @@ class BernoulliDashboard extends Component{
       <span key='less_than' 
         className={eventsOption === 'less_than' ? 'active' : ''} 
         onClick={() => this.handleEventsOptionChange('less_than')}
-      >Число успехов меньше m</span>
+      >Число успехов меньше m</span>,
+      <span key='between' 
+        className={eventsOption === 'between' ? 'active' : ''} 
+        onClick={() => this.handleEventsOptionChange('between')}
+      >Число успехов между m<sub>1</sub> и m<sub>2</sub></span>
     ];
 
     return (
@@ -146,10 +148,6 @@ class BernoulliDashboard extends Component{
         <h2 className="dashboard-formula-header">Расчёт вероятности по формуле Бернулли</h2>
         <span>Расчётная формула: </span><img className="formula-image" src={bernoulliFormula} alt="Расчётная формула"/>
         <form onSubmit={this.calculate}>
-          <label id="check-between-input">
-            Расчёт вероятности между двумя значениями числа успехов 
-            <input type="checkbox" name="between" checked={this.state.between} onChange={this.handleBetweenCheck}/>
-          </label>
 
           <div className="eventsControls">
             {numberOfEventsControls}
@@ -161,11 +159,12 @@ class BernoulliDashboard extends Component{
             handler={this.handleNChange}
           />
 
-          <ControlledInput
+          { this.state.numberOfEventsOption !== 'between' ? 
+            <ControlledInput
             labelText="Значение m числа успехов:"
             value={this.state.m}
             handler={this.handleMChange}
-          />
+          /> : null}
 
           <ControlledInput
             labelText="Значение p вероятности успеха:"
@@ -173,7 +172,7 @@ class BernoulliDashboard extends Component{
             handler={this.handlePChange}
           />
 
-          {this.state.between && 
+          {this.state.numberOfEventsOption === 'between' && 
             <React.Fragment>
               <ControlledInput
                 labelText="Значение m1 числа успехов (левая граница):"
