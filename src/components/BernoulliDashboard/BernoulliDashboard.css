@@ -1,0 +1,29 @@
+.eventsControls {
+  padding-bottom: 30px;
+}
+
+.eventsControls > span {
+  margin-left: 20px;
+  border-bottom: 3px solid #ccc;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+.eventsControls > span:first-child {
+  margin-left: 0px;
+}
+.eventsControls > span.active {
+  border-bottom: 3px solid #5d5c19;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  margin-left: 10px;
+}
+
+#check-between-input {
+  margin-bottom: 10px;
+}

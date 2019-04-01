@@ -1,0 +1,15 @@
+.formulasContainer {
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+
+.formulasContainer > span {
+  display: inline-block;
+  border-bottom: 3px solid #ccc;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+
+.formulasContainer > span.active {
+  border-bottom: 3px solid #e28935;
+}
