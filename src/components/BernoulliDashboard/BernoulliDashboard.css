@@ -1,12 +1,13 @@
 .eventsControls {
   padding-bottom: 30px;
+  justify-content: space-evenly;
 }
 
 .eventsControls > span {
-  margin-left: 20px;
   border-bottom: 3px solid #ccc;
   transition: all .25s ease;
   cursor: pointer;
+  display: inline-block;
 }
 .eventsControls > span:first-child {
   margin-left: 0px;

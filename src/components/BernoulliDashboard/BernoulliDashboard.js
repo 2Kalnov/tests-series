@@ -17,7 +17,6 @@ class BernoulliDashboard extends Component{
       m: '',
       m1: '',
       m2: '',
-      between: false,
       numberOfEventsOption: 'single',
       calculationResult: '',
       error: true,
@@ -115,7 +114,7 @@ class BernoulliDashboard extends Component{
       
     if(!error)
       calculationResult = 
-      !this.state.numberOfEventsOption === 'between' ? Bernoulli(this.state.numberOfEventsOption, p, n, Number.parseInt(this.state.m))
+      this.state.numberOfEventsOption !== 'between' ? Bernoulli(this.state.numberOfEventsOption, p, n, Number.parseInt(this.state.m))
       : BernoulliBetween(p, n, Number.parseInt(this.state.m1), Number.parseInt(this.state.m2));
 
     this.setState({calculationResult: calculationResult, error: error, errorMessage: errorMessage});
@@ -149,7 +148,7 @@ class BernoulliDashboard extends Component{
         <span>Расчётная формула: </span><img className="formula-image" src={bernoulliFormula} alt="Расчётная формула"/>
         <form onSubmit={this.calculate}>
 
-          <div className="eventsControls">
+          <div className="eventsControls flexbox">
             {numberOfEventsControls}
           </div>
 

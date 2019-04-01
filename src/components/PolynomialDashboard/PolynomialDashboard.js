@@ -109,7 +109,7 @@ class PolynomialDashboard extends Component {
     let error = false; 
     let errorMessage = [];
 
-    let kIsWrong = Number.parseInt(this.state.k) == 0;
+    let kIsWrong = Number.parseInt(this.state.k) === 0;
 
     let mSum = 0;
     let mValueList = [];
