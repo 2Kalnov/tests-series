@@ -174,13 +174,13 @@ class BernoulliDashboard extends Component{
           {this.state.numberOfEventsOption === 'between' && 
             <React.Fragment>
               <ControlledInput
-                labelText="Значение m1 числа успехов (левая граница):"
+                labelText={<span>Значение m<sub>1</sub> числа успехов (левая граница):</span>}
                 value={this.state.m1}
                 handler={this.handleM1Change}
               />
 
               <ControlledInput
-                labelText="Значение m2 числа успехов (левая граница):"
+                labelText={<span>Значение m<sub>2</sub> числа успехов (правая граница):</span>}
                 value={this.state.m2}
                 handler={this.handleM2Change}
               />
