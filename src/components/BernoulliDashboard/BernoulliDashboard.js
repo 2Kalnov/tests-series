@@ -83,21 +83,22 @@ class BernoulliDashboard extends Component{
     let anyMIsWrong = false;
 
     let p = Number.parseFloat(this.state.p);
-    if(Number.isNaN(p) || p < 0 || p > 1 || this.state.p.includes(',')) 
-      pIsWrong = true;
-   
+    
+    pIsWrong = Number.isNaN(p) || p < 0 || p > 1 || this.state.p.includes(',');
+
     let mList = [], mIntList = [];
 
     if(this.state.numberOfEventsOption === 'between')
-      mList.push(this.state.m1, this.state.m1);
+      mList.push(this.state.m1, this.state.m2);
     else
       mList.push(this.state.m);
 
     mList.forEach(el => {
       let num = Number.parseInt(el);
       mIntList.push(num);
-      if(el === '' || num < 0)
-        anyMIsWrong = true;
+      anyMIsWrong = el === '' || num < 0 || num > Number.parseInt(this.state.n);
+      console.log(num);
+      console.log(num > Number.parseInt(this.state.n));
     });
 
     let n = Number.parseInt(this.state.n);
@@ -110,7 +111,7 @@ class BernoulliDashboard extends Component{
     if(nIsWrong)
       errorMessage.push('Количество испытаний должно быть не меньше 1.');
     if(anyMIsWrong)
-      errorMessage.push('Количество успехов должно быть целым числом.');
+      errorMessage.push('Количество успехов должно быть целым числом и не больше количества испытаний.');
       
     if(!error)
       calculationResult = 

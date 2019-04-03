@@ -28,6 +28,7 @@ class PolynomialDashboard extends Component {
   }
 
   handleKChange = (e) => {
+    this.adjustGroupLists();
     let k = Number.parseInt(e.target.value, 10);
     if(Number.isNaN(k))
       k = '';
@@ -41,7 +42,7 @@ class PolynomialDashboard extends Component {
     this.setState(state => {
       let mList = state.m;
       mList.set(inputNumber, groupSize);
-      return mList;
+      return {m: mList};
     });
   }
 
@@ -52,7 +53,7 @@ class PolynomialDashboard extends Component {
     this.setState(state => {
       let pList = state.p;
       pList.set(inputNumber, probabilityValue);
-      return pList;
+      return {p: pList};
     });
   }
 
@@ -101,6 +102,20 @@ class PolynomialDashboard extends Component {
       inputList.push(input);
     }
     return inputList;
+  }
+
+  adjustGroupLists = () => {
+    let groupsNum = this.state.m.size;
+    let newSize = this.state.k;
+    this.setState(state => {
+      let mList = this.state.m;
+      let pList = this.state.p;
+      for(let i = newSize; i <= groupsNum; i += 1) {
+        pList.delete(i.toString());
+        mList.delete(i.toString());
+      }
+      return {p: pList, m: mList};
+    });
   }
 
   calculate = (e) => {
