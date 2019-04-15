@@ -37,7 +37,7 @@ class PolynomialDashboard extends Component {
   }
 
   handleMChange = (e) => {
-    let inputNumber = e.target.name.slice(-1);
+    let inputNumber = e.target.name.slice(1);
     let groupSize = e.target.value;
     this.setState(state => {
       let mList = state.m;
@@ -47,7 +47,7 @@ class PolynomialDashboard extends Component {
   }
 
   handlePChange = (e) => {
-    let inputNumber = e.target.name.slice(-1);
+    let inputNumber = e.target.name.slice(1);
     let probabilityValue = e.target.value;
 
     this.setState(state => {
