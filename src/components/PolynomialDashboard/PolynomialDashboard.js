@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ControlledInput from '../ControlledInput/ControlledInput';
 import CalculationResult from '../CalculationResult/CalculationResult';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { Polynomial } from '../../math/calculations';
+import { Polynomial, ProbabilitiesSumIsOne } from '../../math/calculations';
 import polynomialFormula from '../../assets/images/polynomial.png';
 
 class PolynomialDashboard extends Component {
@@ -126,7 +126,7 @@ class PolynomialDashboard extends Component {
 
     let kIsWrong = Number.parseInt(this.state.k) === 0;
 
-    let mSum = 0;
+    let mSum = 0, pSumIsOne = false;
     let mValueList = [];
     let pValueList = [];
 
@@ -159,13 +159,19 @@ class PolynomialDashboard extends Component {
           anyPIsWrong = true;
         pValueList.push(pValue);
       }
-    })
+    });
 
-    if(anyPIsWrong || anyMIsWrong || this.state.n <= 0 || mSum !== this.state.n || kIsWrong)
-      error = true;
+    pSumIsOne = ProbabilitiesSumIsOne(pValueList);
+    console.log(pSumIsOne);
+
+    // if(anyPIsWrong || anyMIsWrong || this.state.n <= 0 || mSum !== this.state.n || kIsWrong)
+    //   error = true;
 
     if(anyPIsWrong) 
       errorMessage.push('Вероятность успеха - число от 0 до 1, десятичная часть которого записывается через точку.');
+
+    if(!pSumIsOne)
+      errorMessage.push('Сумма вероятностей рассматриваемых событий не равна 1.');
 
     if(anyMIsWrong)
       errorMessage.push('Количество объектов группы (m) должно быть не меньше 0.');
@@ -178,6 +184,8 @@ class PolynomialDashboard extends Component {
 
     if(kIsWrong)
       errorMessage.push('Количество групп объектов должно быть не меньше 1.');
+
+    error = errorMessage.length != 0;
 
     if(!error)
     {

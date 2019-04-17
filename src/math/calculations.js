@@ -107,9 +107,17 @@ const countWithBernoulliFormulaAndFormat = (numberOfEventsOption, input_p, n, m)
   return math.format(probabilityValue, outputFormatSettings);
 }
 
-// export {countCombinations as combinations};
-// export {countGaussianDistributionDensity as GaussianDistributionDensity};
+const isProbabilitiesSumEqOne = (pList) => {
+  const pNumberList = pList.map(p => math.bignumber(p));
+  let pSum = math.bignumber(0);
+
+  pSum = pNumberList.reduce((sum, p) => math.add(sum, p), pSum);
+
+  return math.equal(math.bignumber(1), pSum);
+}
+
 export {countWithBernoulliFormulaAndFormat as Bernoulli};
 export {countWithBernoulliFormulaBetweenTwoValues as BernoulliBetween};
 export {countWithPolynomialFormula as Polynomial};
-export {countWithLocalMoivreLaplasTheorem as MoivreLaplasLocal}
+export {countWithLocalMoivreLaplasTheorem as MoivreLaplasLocal};
+export {isProbabilitiesSumEqOne as ProbabilitiesSumIsOne};
